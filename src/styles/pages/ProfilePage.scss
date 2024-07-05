@@ -1,0 +1,72 @@
+.profile-page {
+  position: relative;
+
+  .profile-page-scaffold {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 1;
+
+    .back-button {
+      position: relative;
+      right: 20vw;
+      outline: none;
+      background-color: white;
+      border: none;
+    }
+
+    .back-button:hover {
+      cursor: pointer;
+    }
+
+    .profile-content-scaffold {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .user-profile-circle {
+        transform: translateY(-5vh);
+      }
+      .profile-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        p {
+          margin-top: 10px;
+          margin-bottom: 50px;
+          font-size: 2.3rem;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .background {
+    position: absolute;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    border: 3px solid black;
+
+    .one {
+      position: absolute;
+      top: 15vh;
+      left: 10vw;
+    }
+
+    .two {
+      position: absolute;
+      top: 70vh; // 왜 bottom이 안되는거지?; -> I think svg elements interfere with each other...
+      right: 10vw;
+    }
+  }
+}
+
+// 둘다.. absolute으로 했었어야 했다..

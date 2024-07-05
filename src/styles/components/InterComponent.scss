@@ -1,0 +1,25 @@
+.intercomponent-scaffold {
+  height: 3.5rem;
+  width: 11rem;
+  border: none;
+  border-radius: 1rem;
+  background-color: #efbc9b;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  text-decoration: none;
+  color: black;
+}
+
+.intercomponent-scaffold:hover {
+  cursor: pointer;
+}
+
+.add {
+  top: 3vh;
+  background-color: #d6dac8;
+  color: white;
+}

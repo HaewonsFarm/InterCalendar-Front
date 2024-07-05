@@ -1,0 +1,97 @@
+.login-scaffold {
+  position: absolute; // if this is relative, the background gets effected
+  h1 {
+    // border: 3px solid green;
+    position: relative;
+    top: 15vh;
+    left: 12vw;
+
+    font-size: 3rem;
+    font-weight: 400;
+  }
+  .input-scaffold {
+    position: relative;
+    top: 30vh;
+    left: 12vw;
+    height: 30vh;
+    // border: solid yellow 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    // p {
+    //   position: absolute;
+    //   left: 12vw;
+    //   font-size: 1.5rem;
+    //   font-weight: 300;
+    // }
+    input {
+      margin: 8px;
+    }
+
+    // .username-title {
+    //   top: 35vh;
+    // }
+    // .password-title {
+    //   top: 55vh;
+    // }
+    // .username-form {
+    //   position: absolute;
+    //   left: 12vw;
+    //   top: 43vh;
+    // }
+    // .password-form {
+    //   position: absolute;
+    //   left: 12vw;
+    //   top: 60vh;
+    // }
+
+    input {
+      width: 30vw;
+      border: none;
+      font-size: 1.5rem;
+      font-weight: 200;
+    }
+    input:focus {
+      outline: none;
+    }
+    .input-line {
+      height: 0.01px;
+      width: 30vw;
+      border: 1.2px solid black;
+    }
+
+    .submit-button {
+      position: absolute; // right이랑 top 지워보고 이해해봐라...
+      // border: solid salmon 4px;
+      bottom: -10vh;
+      right: -25vw;
+      border: none;
+      background-color: white;
+      font-size: 1.5rem;
+      font-weight: 300;
+    }
+    .submit-button:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.background {
+  position: absolute;
+  z-index: -1;
+  height: 100vh;
+  width: 100vw;
+  // border: pink 10px solid;
+
+  .one {
+    position: absolute; // if this is relative, it effects the second object below...
+    top: 15vh;
+    left: 25vw;
+  }
+
+  .two {
+    position: absolute;
+    top: 70vh; // 왜 bottom이 안되는거지?;
+    right: 15vw;
+  }
+}
