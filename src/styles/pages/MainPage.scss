@@ -6,14 +6,48 @@
     height: 100vh;
     width: 15vw;
   }
+
   .main-body {
     height: 100vh;
     width: 88vw;
   }
-  .main-calendar {
-    position: relative;
+
+  .main-container {
+    position: absolute;
     height: 100vh;
     width: 80vw;
-    margin: 20px;
+
+    .button-container {
+      display: flex;
+      justify-content: flex-end;
+      position: absolute;
+      width: 100%;
+      top: 10px;
+      right: 10px;
+    }
+
+    .toggle-button {
+      padding: 5px 10px;
+      font-size: 13px;
+      background-color: #71aec3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      z-index: 1200;
+
+      &:active {
+        background-color: #57767b;
+      }
+    }
+
+    .main-calendar {
+      position: relative;
+      height: 110vh;
+      width: 80vw;
+      margin: 20px;
+      padding: 18px 0px 0px 0px;
+    }
   }
 }
