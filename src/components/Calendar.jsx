@@ -9,9 +9,8 @@ import {
   TodayButton,
   Toolbar,
 } from '@devexpress/dx-react-scheduler-material-ui';
-import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
+import { styled, ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
-import { appointments } from '../demo-data/month-appointments';
 
 const PREFIX = 'Demo';
 
@@ -43,42 +42,45 @@ const StyledDateNavigatorNavigationButton = styled(DateNavigator.NavigationButto
   borderColor: theme.palette.custom.main,
 }));
 
-export default class Demo extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const Calendar = ({ events = [] }) => {
+  const [data, setData] = React.useState([]);
 
-    this.state = {
-      data: appointments,
-    };
-  }
+  React.useEffect(() => {
+    if (Array.isArray(events) && events.length > 0) {
+      const formattedEvents = events.map(event => ({
+        ...event,
+        startDate: new Date(event.startDate),
+        endDate: new Date(event.endDate),
+      }));
+      setData(formattedEvents);
+    }
+  }, [events]);
 
-  render() {
-    const { data } = this.state;
+  return (
+    <ThemeProvider theme={theme}>
+      <Paper>
+        <Scheduler data={data}>
+          <ViewState defaultCurrentDate={new Date().toISOString().split('T')[0]} />
+          <MonthView />
+          <Toolbar />
+          <DateNavigator
+            openButtonComponent={(props) => (
+              <StyledDateNavigatorOpenButton {...props} />
+            )}
+            navigationButtonComponent={(props) => (
+              <StyledDateNavigatorNavigationButton {...props} />
+            )}
+          />
+          <TodayButton buttonComponent={(props) => (
+            <StyledTodayButton {...props} />
+          )} />
+          <Appointments appointmentComponent={(props) => (
+            <StyledAppointmentsAppointment {...props} className={classes.appointment} />
+          )} />
+        </Scheduler>
+      </Paper>
+    </ThemeProvider>
+  );
+};
 
-    return (
-      <ThemeProvider theme={theme}>
-        <Paper>
-          <Scheduler data={data}>
-            <ViewState defaultCurrentDate="2018-07-27" />
-            <MonthView />
-            <Toolbar />
-            <DateNavigator
-              openButtonComponent={(props) => (
-                <StyledDateNavigatorOpenButton {...props} />
-              )}
-              navigationButtonComponent={(props) => (
-                <StyledDateNavigatorNavigationButton {...props} />
-              )}
-            />
-            <TodayButton buttonComponent={(props) => (
-              <StyledTodayButton {...props} />
-            )} />
-            <Appointments appointmentComponent={(props) => (
-              <StyledAppointmentsAppointment {...props} className={classes.appointment} />
-            )} />
-          </Scheduler>
-        </Paper>
-      </ThemeProvider>
-    );
-  }
-}
+export default Calendar;
