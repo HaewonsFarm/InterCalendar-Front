@@ -1,11 +1,38 @@
 import "../styles/pages/GroupPage.scss";
 import Header from "../components/Header";
 import LabelWithHighlight from "../components/LabelWithHighlight";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { fetchGroup, updateGroup } from '../redux/groupSlice';
 
 const { kakao } = window;
 
 const GroupPage = () => {
+  const { groupId } = useParams();  // 루트 params에서 groupId가 얻어졌는지 추정
+  const dispatch = useDispatch();
+  const group = useSelector((state) => state.group.group);
+  const [time, setTime] = useState('');
+  const [span, setSpan] = useState({ start: '', end: '' });
+  
+  useEffect(() => {
+    if (groupId) {
+      dispatch(fetchGroup(groupId));
+    }
+  }, [dispatch, groupId]);
+
+  useEffect(() => {
+    if (group) {
+      setTime(group.time);
+      setSpan({ start: group.startDate, end: group.endDate });
+    }
+  }, [group]);
+
+  const handleUpdate = () => {
+    dispatch(updateGroup({ groupId, updateData: {time, startTime: span.start, endTime: span.end }}));
+  };
+
+
   useEffect(() => {
     // Initialize the map after the script is loaded
     // const kakao = window.kakao;
@@ -21,6 +48,7 @@ const GroupPage = () => {
     });
     marker.setMap(map);
   }, []);
+
   return (
     <>
       <Header />
@@ -36,7 +64,7 @@ const GroupPage = () => {
                 boxh={1}
                 boxw={10}
               />
-              <p>GroupName </p>
+              <p>{group ? group.groupName : 'Loading... '}</p>
             </div>
             <div className="group-component member">
               <LabelWithHighlight
@@ -47,7 +75,7 @@ const GroupPage = () => {
                 boxh={1}
                 boxw={10}
               />
-              <p>5 </p>
+              <p>{group ? group.memberCount: 'Loading...'}</p>
             </div>
           </div>
           <div className="best-time best-time-section">
@@ -62,9 +90,9 @@ const GroupPage = () => {
               />
             </div>
             <div className="best-time-show">
-              <p>05 . 26 일요일 3:00 ~ 6:00 </p>
-              <p>05 . 25 토요일 5:00 ~ 8:00 </p>
-              <p>05 . 25 토요일 5:00 ~ 8:00 </p>
+              {group && group.bestTimes.map((time, index) => (
+                <p key={index}>{`${time.date} ${time.startTime} ~ ${time.endTime}`}</p>
+              ))}
             </div>
           </div>
           <div className="time-span section">
@@ -80,7 +108,9 @@ const GroupPage = () => {
               <div className="time-select">
                 <input
                   type="number"
-                  value="3" // 이거는 그룹 데이터에 있는 time을 가지고 와야한다. 그리고 state 써서 관리
+                  // value="3" // 이거는 그룹 데이터에 있는 time을 가지고 와야한다. 그리고 state 써서 관리
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
                   min="1"
                   max="10"
                   id="number-input"
@@ -98,15 +128,25 @@ const GroupPage = () => {
                 boxw={10}
               />
               <div className="date-select">
-                <input type="date" value="2024-05-26" />
+                <input 
+                type="date" 
+                //value="2024-05-26" 
+                value={span.start}
+                onChange={(e) => setSpan({ ...span, start: e.target.value })}
+                />
                 {/* 이거는 state써서 관리..  */}
                 <p> ~ </p>
-                <input type="date" value="2024-05-26" />
+                <input 
+                type="date" 
+                //value="2024-05-26" 
+                value={span.end}
+                onChange={(e) => setSpan({ ...span, end: e.target.value })}
+                />
               </div>
             </div>
             <div className=" group-component edit-section">
               <p>Creator edit only!</p>
-              <button>edit</button>
+              <button onClick={handleUpdate}>edit</button>
             </div>
           </div>
         </div>
