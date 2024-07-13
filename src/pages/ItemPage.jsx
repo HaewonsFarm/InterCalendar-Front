@@ -1,11 +1,59 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import "../styles/pages/ItemPage.scss";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { createItem, updateItem, fetchItem } from '../redux/itemSlice';
 
 const ItemPage = () => {
   const nav = useNavigate();
   const { id } = useParams(); // 있으면 사용자 item 수정, 없으면 사용자 item 새로 만들기
+  const dispatch = useDispatch();
+  const item = useSelector((state) => state.item.item);
+
+  const [formData, setFormData] = useState({
+    role: '',
+    startDate: '',
+    endDate: '',
+    startTime: '',
+    endTime: '',
+  });
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchItem(id));
+    }
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (item) {
+      setFormData({
+        role: item.role,
+        startDate: item.startDate,
+        endDate: item.endDate,
+        startTime: item.startTime,
+        endTime: item.endTime,
+      });
+    }
+  }, [item]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (id) {
+      dispatch(updateItem({id, ...formData}));
+    } else {
+      dispatch(createItem(formData));
+    }
+    nav(-1);
+  }
+
   return (
     <div className="item-page-scaffold">
       <div className="item-crud-scaffold">
@@ -37,26 +85,43 @@ const ItemPage = () => {
             <rect y="8.00006" width="30" height="4" rx="2" fill="black" />
           </svg>
         </button>
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <div className="item-crud-content">
             <div className="label-with-highlight">
-              <input type="text" placeholder="Fixed Occupation" />
+              <input 
+              type="text" 
+              name="role"
+              value={formData.role}
+              onChange={handleInputChange}
+              placeholder="Fixed Occupation" 
+              />
               <div className="highlight" />
             </div>
             <div className="date-info">
-              <div className="date">05.25</div>
+              <div className="date">{formData.startDate}</div>
               <div className="day-of-week-box">
-                <p>Thu</p>
+                <p>Thu</p>   {/* <- 이거 뭐지? */}
               </div>
             </div>
 
             <div className="select-time">
-              <input type="time" id="time" />
+              <input 
+              type="time" 
+              name="startTime"
+              value={formData.startTime}
+              onChange={handleInputChange}
+              />
               <p> ~ </p>
-              <input type="time" id="time" />
+              <input 
+              type="time" 
+              name="endTime"
+              value={formData.endTime}
+              onChange={handleInputChange}
+              />
             </div>
 
             <div className="button-scaffold">
+              { /*
               {id === undefined ? (
                 <button>Save</button>
               ) : (
@@ -64,6 +129,15 @@ const ItemPage = () => {
                   <button>Update</button>
                   <button>Delete</button>
                 </>
+              )}
+              */}
+              {id ? (
+                <>
+                <button type="submit">Update</button>
+                <button type="button" onClick={() => dispatch(deleteItem(id))}>Delete</button>
+                </>
+              ) : (
+                <buttton type="submit">Save</buttton>
               )}
             </div>
           </div>
