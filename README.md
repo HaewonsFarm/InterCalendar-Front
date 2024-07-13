@@ -15,3 +15,5 @@ Currently, two official plugins are available:
 - kakao map api key 넣고 그룹 페이지 확인
 - GroupPage, ItemPage 엔드 포인트 맞춰서 서버 통신
 - CreateGroupPage와 GroupPage의 역할 분리 필요
+
+*마지막 커밋된 버전: reactive 브랜치
