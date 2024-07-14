@@ -5,10 +5,6 @@ import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createGroup } from "../redux/groupSlice";
 
-// 백엔드 연결 없이 "Create ->" 버튼을 누를 경우 네트워크 요청을 완료할 수 없어
-// Redux thunk 작업이 실패한다. 따라서 오류 메세지가 뜬다. 
-// => 코드가 잘 작동되는지 모른다.
-
 const CreateGroupPage = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
@@ -102,7 +98,7 @@ const CreateGroupPage = () => {
                 textAnchor="middle"
                 fill="black"
               >
-                {groupName[0]}
+                {groupName[0] || ""}
               </text>
             </svg>
           </div>
