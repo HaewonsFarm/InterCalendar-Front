@@ -15,7 +15,7 @@ Currently, two official plugins are available:
 - kakao map api key 넣고 그룹 페이지 확인
 - GroupPage, ItemPage 엔드 포인트 맞춰서 서버 통신
 - 유저 정보와 관련된 LoginPage.jsx, Profile.jsx, SignUpPage,jsx 를 제외한 나머지 페이지들 서버 연결
-- CreateGroupPage.jsx는 최적화가 안돼있어서 내 컴퓨터에 맞게 scss 파일을 수정함. 중요한 부분은 아니므로 필요하면 없애도 됨.
+- CreateGroupPage.jsx는 최적화가 안돼있어서 내 컴퓨터에 맞게 scss 파일을 수정함. 중요한 부분은 아님.
 - reactive-1 버전에서는 CreateGroupPage가 Redux thunk 작업을 수행하게 만들었으므로 백엔드 연결 없이 "Create->" 버튼을 누를 수 없음.
 
 *마지막 커밋된 버전: reactive-1 브랜치
