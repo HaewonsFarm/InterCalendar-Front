@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const ENDPOINT = '12.235.124.214';
+const ENDPOINT = 'http://12.235.124.214';  
+// endpoint에 문제가 있을 수 있음. 백엔드 잘 몰라서.. 문제 생기면 '12.235.124.214'
 
 // 비동기 액션
 export const createGroup = createAsyncThunk('group/createGroup', async (groupData, { rejectWithValue }) => {
