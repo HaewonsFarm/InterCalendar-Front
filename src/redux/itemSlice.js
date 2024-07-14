@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const ENDPOINT = '12.235.124.214';
+const ENDPOINT = 'https://12.235.124.214';
 
 // 비동기 액션
 export const createItem = createAsyncThunk('item/createItem', async (itemData, { rejectWithValue }) => {
