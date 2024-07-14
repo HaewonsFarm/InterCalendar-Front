@@ -9,7 +9,7 @@ import { fetchGroup, updateGroup } from '../redux/groupSlice';
 const { kakao } = window;
 
 const GroupPage = () => {
-  const { groupId } = useParams();  // 루트 params에서 groupId가 얻어졌는지 추정
+  const { groupId } = useParams();  // GroupId가 바뀔 때 group data를 fetch함.
   const dispatch = useDispatch();
   const group = useSelector((state) => state.group.group);
   const [time, setTime] = useState('');
@@ -90,9 +90,10 @@ const GroupPage = () => {
               />
             </div>
             <div className="best-time-show">
-              {group && group.bestTimes.map((time, index) => (
-                <p key={index}>{`${time.date} ${time.startTime} ~ ${time.endTime}`}</p>
-              ))}
+            {group && group.bestTimes.slice(0, 3).map((timeSlot, index) => (
+              <p key={index}>{`${timeSlot.date} ${timeSlot.startTime} ~ ${timeSlot.endTime}`}</p>
+            ))}
+            {/* 백엔드로부터 3개의 시간대를 `group.bestTimes` array로 slice 해와서 동적으로 보여줌. */}
             </div>
           </div>
           <div className="time-span section">
@@ -105,6 +106,7 @@ const GroupPage = () => {
                 boxh={1}
                 boxw={10}
               />
+              {/* 그룹의 시간과 기간을 업데이트 하기 위한 부분 */}
               <div className="time-select">
                 <input
                   type="number"
