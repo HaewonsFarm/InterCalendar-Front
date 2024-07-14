@@ -1,10 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const ENDPOINT = 'http://12.235.124.214';  
-// endpoint에 문제가 있을 수 있음. 백엔드 잘 몰라서.. 문제 생기면 '12.235.124.214'
+const ENDPOINT = 'http://12.235.124.214';
 
-// 비동기 액션
 export const createGroup = createAsyncThunk('group/createGroup', async (groupData, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${ENDPOINT}/api/group`, groupData);
@@ -41,9 +39,19 @@ export const updateGroup = createAsyncThunk('group/updateGroup', async ({ groupI
   }
 });
 
+export const fetchGroups = createAsyncThunk('group/fetchGroups', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axios.get(`${ENDPOINT}/api/groups`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
 const groupSlice = createSlice({
   name: 'group',
   initialState: {
+    groups: [],
     group: null,
     status: 'idle',
     error: null,
@@ -56,7 +64,7 @@ const groupSlice = createSlice({
       })
       .addCase(createGroup.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.group = action.payload;
+        state.groups.push(action.payload);
       })
       .addCase(createGroup.rejected, (state, action) => {
         state.status = 'failed';
@@ -92,6 +100,17 @@ const groupSlice = createSlice({
         state.group = action.payload;
       })
       .addCase(updateGroup.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(fetchGroups.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchGroups.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.groups = action.payload;
+      })
+      .addCase(fetchGroups.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
