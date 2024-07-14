@@ -1,4 +1,3 @@
-// src/pages/CreateGroupPage.jsx
 import { useState, useEffect } from "react";
 import LabelWithHighlight from "../components/LabelWithHighlight";
 import "../styles/pages/CreateGroupPage.scss";
