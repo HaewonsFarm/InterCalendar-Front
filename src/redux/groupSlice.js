@@ -1,11 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BACKEND_ENDPOINT } from '../store/config/configSlice';
 
-const ENDPOINT = 'http://12.235.124.214';
+// const BACKEND_ENDPOINT = 'http://12.235.124.214';
 
 export const createGroup = createAsyncThunk('group/createGroup', async (groupData, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`${ENDPOINT}/api/group`, groupData);
+    const response = await axios.post(`${BACKEND_ENDPOINT}/api/group`, groupData);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -14,7 +15,7 @@ export const createGroup = createAsyncThunk('group/createGroup', async (groupDat
 
 export const joinGroup = createAsyncThunk('group/joinGroup', async (groupId, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`${ENDPOINT}/api/group/${groupId}`);
+    const response = await axios.post(`${BACKEND_ENDPOINT}/api/group/${groupId}`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -23,7 +24,7 @@ export const joinGroup = createAsyncThunk('group/joinGroup', async (groupId, { r
 
 export const fetchGroup = createAsyncThunk('group/fetchGroup', async (groupId, { rejectWithValue }) => {
   try {
-    const response = await axios.get(`${ENDPOINT}/api/group/${groupId}`);
+    const response = await axios.get(`${BACKEND_ENDPOINT}/api/group/${groupId}`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -32,7 +33,7 @@ export const fetchGroup = createAsyncThunk('group/fetchGroup', async (groupId, {
 
 export const updateGroup = createAsyncThunk('group/updateGroup', async ({ groupId, updateData }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${ENDPOINT}/api/group/${groupId}`, updateData);
+    const response = await axios.put(`${BACKEND_ENDPOINT}/api/group/${groupId}`, updateData);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -41,7 +42,7 @@ export const updateGroup = createAsyncThunk('group/updateGroup', async ({ groupI
 
 export const fetchGroups = createAsyncThunk('group/fetchGroups', async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get(`${ENDPOINT}/api/groups`);
+    const response = await axios.get(`${BACKEND_ENDPOINT}/api/groups`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);

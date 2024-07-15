@@ -8,16 +8,16 @@ import { createGroup } from "../redux/groupSlice";
 const CreateGroupPage = () => {
   const nav = useNavigate();
   const dispatch = useDispatch();
-  const userName = useSelector((state) => state.userInfo.userName);
+  const userName = useSelector((state) => state.auth.user.userName); // 이 화면은 어차피 유저가 로그인이 되어 있어야 한다
 
   const [groupName, setGroupName] = useState("");
   // useEffect(() => {
   //   console.log(groupName);
   // }, [groupName]);
-  const [ startDate, setStartDate ] = useState("");
-  const [ endDate, setEndDate ] = useState("");
-  const [ time, setTime ] = useState(3);
-  const [ memberNum, setMemberNum ] = useState(5);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [time, setTime] = useState(3);
+  const [memberNum, setMemberNum] = useState(5);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ const CreateGroupPage = () => {
       time,
       memberNum,
     };
-    
+
     try {
       const result = await dispatch(createGroup(groupData)).unwrap();
       if (result.status === 200) {
@@ -40,7 +40,6 @@ const CreateGroupPage = () => {
       alert(error.message || "Failed to create group");
     }
   };
-
 
   return (
     <div className="create-group-page">
@@ -140,18 +139,18 @@ const CreateGroupPage = () => {
                 boxw={10}
               />
               <div className="date-select">
-                <input 
-                type="date" 
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                required
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  required
                 />
                 <p> ~ </p>
-                <input 
-                type="date" 
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                required
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  required
                 />
               </div>
 
@@ -196,13 +195,13 @@ const CreateGroupPage = () => {
               />
             </div>
           </div>
-        <button type="submit" className="create-group-button">
+          <button type="submit" className="create-group-button">
             <p>{"Create ->"}</p>
-        </button>
-        {/* <button className="create-group-button">
+          </button>
+          {/* <button className="create-group-button">
           <p>{"Create →"}</p>
         </button> */}
-        { /*
+          {/*
         <Link className="create-group-button" to="/waiting-room">
           <p>{"Create →"}</p>
         </Link>

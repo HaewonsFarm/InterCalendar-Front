@@ -15,10 +15,11 @@ import { useSelector } from "react-redux";
 import "./App.scss";
 
 function App() {
-  const loggedIn = useSelector((state) => state.userSession.loggedIn);
-  useEffect(() => {
-    console.log(loggedIn);
-  }, [loggedIn]);
+  const loggedIn = useSelector((state) => state.auth.isAuthenticated);
+
+  // useEffect(() => {
+  //   console.log(loggedIn);
+  // }, [loggedIn]);
 
   return (
     <>
