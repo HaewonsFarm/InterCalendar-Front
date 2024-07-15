@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import "../styles/pages/ProfilePage.scss";
 
 const ProfilePage = () => {
-  const userName = useSelector((state) => state.userInfo.userName);
-  const userNameFirst = useSelector((state) => state.userInfo.userNameFirst);
-  const groupNum = useSelector((state) => state.userInfo.groupNum);
+  const userName = useSelector((state) => state.auth.user.userName);
+  const userNameFirst = useSelector((state) => state.auth.user.userNameFirst);
+  const groupNum = useSelector((state) => state.auth.user.groupNum);
   const nav = useNavigate();
   return (
     <div className="profile-page">

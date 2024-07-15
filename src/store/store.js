@@ -4,14 +4,18 @@ import userInfoReducer from "./user/userInfoSlice";
 import calendarReducer from "../redux/calendarSlice";
 import groupReducer from "../redux/groupSlice";
 import itemReducer from "../redux/itemSlice";
+import configReducer from "./config/configSlice";
+import authReducer from "./user/authSlice";
 
 const store = configureStore({
   reducer: {
-    userSession: userSessionReducer,
-    userInfo: userInfoReducer,
+    // userSession: userSessionReducer,
+    // userInfo: userInfoReducer,
     calendar: calendarReducer,
     group: groupReducer,
     item: itemReducer,
+    config: configReducer,
+    auth: authReducer,
   },
 });
 

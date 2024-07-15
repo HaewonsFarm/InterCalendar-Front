@@ -4,10 +4,11 @@ import "../styles/components/Header.scss";
 import LabelWithHighlight from "./LabelWithHighlight";
 
 import { useSelector, useDispatch } from "react-redux";
-import { userLogout } from "../store/user/userSessionSlice";
+import { logout } from "../store/user/authSlice";
 
 const Header = () => {
-  const loggedIn = useSelector((state) => state.userSession.loggedIn);
+  const loggedIn = useSelector((state) => state.auth.isAuthenticated);
+
   const dispatch = useDispatch();
   return (
     <>
@@ -21,7 +22,7 @@ const Header = () => {
               </Link>
               <button
                 className="account-button"
-                onClick={() => dispatch(userLogout())}
+                onClick={() => dispatch(logout())}
               >
                 <p>Logout</p>
               </button>
