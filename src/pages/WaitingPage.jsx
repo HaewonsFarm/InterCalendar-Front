@@ -4,8 +4,10 @@ import axios from "axios";
 
 import "../styles/pages/WaitingPage.scss";
 import LabelWithHighlight from "../components/LabelWithHighlight";
+import { useSelector } from "react-redux";
+import { BACKEND_ENDPOINT } from "../store/config/configSlice";
 
-const BACKEND_ENDPOINT = 'http://12.235.124.214';
+// const BACKEND_ENDPOINT = 'http://12.235.124.214';
 
 const WaitingPage = () => {
   const nav = useNavigate();

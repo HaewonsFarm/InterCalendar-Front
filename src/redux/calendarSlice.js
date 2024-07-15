@@ -1,7 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { BACKEND_ENDPOINT } from '../store/config/configSlice';
 
-const BACKEND_ENDPOINT = 'http://12.235.124.214';
+// const BACKEND_ENDPOINT = 'http://12.235.124.214';
+
 
 // Mock flag
 const useMock = true; // Set this to false to use real backend

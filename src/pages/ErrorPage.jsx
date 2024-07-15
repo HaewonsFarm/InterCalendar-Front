@@ -2,10 +2,13 @@ import { useEffect } from "react";
 import axios from "axios";
 import "../styles/pages/ErrorPage.scss";
 import LabelWithHighlight from "../components/LabelWithHighlight";
+import { useSelector } from "react-redux";
+import { BACKEND_ENDPOINT } from "../store/config/configSlice";
 
-const BACKEND_ENDPOINT = 'http://12.235.124.214'  // 필요할 경우 조정
+// const BACKEND_ENDPOINT = 'http://12.235.124.214'  // 필요할 경우 조정
 
 const ErrorPage = () => {
+
   useEffect(() => {
     const logError = async () => {
        try {

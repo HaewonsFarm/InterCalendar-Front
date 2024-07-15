@@ -4,6 +4,7 @@ import userInfoReducer from "./user/userInfoSlice";
 import calendarReducer from "../redux/calendarSlice";
 import groupReducer from "../redux/groupSlice";
 import itemReducer from "../redux/itemSlice";
+import configReducer from "./config/configSlice"
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     calendar: calendarReducer,
     group: groupReducer,
     item: itemReducer,
+    config : configReducer
   },
 });
 
