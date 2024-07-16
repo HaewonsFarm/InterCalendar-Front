@@ -2,8 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BACKEND_ENDPOINT } from '../store/config/configSlice';
 
-// const BACKEND_ENDPOINT = 'http://12.235.124.214';
-
 export const createGroup = createAsyncThunk('group/createGroup', async (groupData, { rejectWithValue }) => {
   try {
     const response = await axios.post(`${BACKEND_ENDPOINT}/api/group`, groupData);
