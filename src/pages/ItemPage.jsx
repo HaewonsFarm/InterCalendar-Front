@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "../styles/pages/ItemPage.scss";
 import { useState, useEffect } from "react";
-import { createItem, updateItem, fetchItem } from '../redux/itemSlice';
+import { createItem, updateItem, fetchItem, deleteItem } from '../redux/itemSlice';
 
 const ItemPage = () => {
   const nav = useNavigate();
@@ -54,6 +54,11 @@ const ItemPage = () => {
     nav(-1);
   }
 
+  const getDayOfWeek = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { weekday: 'short' });
+  };
+
   return (
     <div className="item-page-scaffold">
       <div className="item-crud-scaffold">
@@ -89,55 +94,45 @@ const ItemPage = () => {
           <div className="item-crud-content">
             <div className="label-with-highlight">
               <input 
-              type="text" 
-              name="role"
-              value={formData.role}
-              onChange={handleInputChange}
-              placeholder="Fixed Occupation" 
+                type="text" 
+                name="role"
+                value={formData.role}
+                onChange={handleInputChange}
+                placeholder="Fixed Occupation" 
               />
               <div className="highlight" />
             </div>
             <div className="date-info">
               <div className="date">{formData.startDate}</div>
               <div className="day-of-week-box">
-                <p>Thu</p>   {/* <- 이거 뭐지? */}
+                <p>{getDayOfWeek(formData.startDate)}</p>   {/* <- 날짜의 요일을 표시 */}
               </div>
             </div>
 
             <div className="select-time">
               <input 
-              type="time" 
-              name="startTime"
-              value={formData.startTime}
-              onChange={handleInputChange}
+                type="time" 
+                name="startTime"
+                value={formData.startTime}
+                onChange={handleInputChange}
               />
               <p> ~ </p>
               <input 
-              type="time" 
-              name="endTime"
-              value={formData.endTime}
-              onChange={handleInputChange}
+                type="time" 
+                name="endTime"
+                value={formData.endTime}
+                onChange={handleInputChange}
               />
             </div>
 
             <div className="button-scaffold">
-              { /*
-              {id === undefined ? (
-                <button>Save</button>
-              ) : (
-                <>
-                  <button>Update</button>
-                  <button>Delete</button>
-                </>
-              )}
-              */}
               {id ? (
                 <>
-                <button type="submit">Update</button>
-                <button type="button" onClick={() => dispatch(deleteItem(id))}>Delete</button>
+                  <button type="submit">Update</button>
+                  <button type="button" onClick={() => dispatch(deleteItem(id))}>Delete</button>
                 </>
               ) : (
-                <buttton type="submit">Save</buttton>
+                <button type="submit">Save</button>
               )}
             </div>
           </div>
