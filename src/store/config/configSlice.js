@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // const BACKEND_ENDPOINT = 'https://intercalendar.xyz';
-const BACKEND_ENDPOINT = "hhttp://intercalendar.xyz";
+const BACKEND_ENDPOINT = "https://intercalendar.xyz";
 
 export const configSlice = createSlice(
     {
