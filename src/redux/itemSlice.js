@@ -1,12 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BACKEND_ENDPOINT } from '../store/config/configSlice';
 
-const ENDPOINT = 'https://12.235.124.214';
-
-// 비동기 액션
 export const createItem = createAsyncThunk('item/createItem', async (itemData, { rejectWithValue }) => {
   try {
-    const response = await axios.post(`${ENDPOINT}/api/item`, itemData);
+    const response = await axios.post(`${BACKEND_ENDPOINT}/api/item`, itemData);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -15,16 +13,25 @@ export const createItem = createAsyncThunk('item/createItem', async (itemData, {
 
 export const updateItem = createAsyncThunk('item/updateItem', async ({ id, ...itemData }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${ENDPOINT}/api/item/${id}`, itemData);
+    const response = await axios.put(`${BACKEND_ENDPOINT}/api/item/${id}`, itemData);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
 });
 
-export const fetchItem = createAsyncThunk('item/fetchItem', async (id, { rejectWithValue }) => {
+export const fetchItem = createAsyncThunk('item/fetchItem', async (itemId, { rejectWithValue }) => {
   try {
-    const response = await axios.get(`${ENDPOINT}/api/item/${id}`);
+    const response = await axios.get(`${BACKEND_ENDPOINT}/api/${itemId}`);
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const deleteItem = createAsyncThunk('item/deleteItem', async (itemId, { rejectWithValue }) => {
+  try {
+    const response = await axios.delete(`${BACKEND_ENDPOINT}/api/${itemId}`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -52,6 +59,17 @@ const itemSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
+      .addCase(fetchItem.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchItem.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.item = action.payload;
+      })
+      .addCase(fetchItem.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
       .addCase(updateItem.pending, (state) => {
         state.status = 'loading';
       })
@@ -63,14 +81,14 @@ const itemSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
-      .addCase(fetchItem.pending, (state) => {
+      .addCase(deleteItem.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchItem.fulfilled, (state, action) => {
+      .addCase(deleteItem.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.item = action.payload;
+        state.item = null;
       })
-      .addCase(fetchItem.rejected, (state, action) => {
+      .addCase(deleteItem.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });
