@@ -2,17 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const userInfoSlice = createSlice({
   name: "userInfoSlice",
-  //   initialState: {
-  //     userName: "",
-  //     userNameFirst: "",
-  //     groupNum: 0,
-  //   },
+    initialState: {
+      userName: "",
+      userNameFirst: "",
+      groupNum: 0,
+    },
 
-  initialState: {
-    userName: "UserOne",
-    userNameFirst: "U",
-    groupNum: 5,
-  },
+  // initialState: {
+  //   userName: "UserOne",
+  //   userNameFirst: "U",
+  //   groupNum: 5,
+  // },
   reducers: {
     updateUser: (state, action) => {
       state.userName = action.payload.userName; // payload 안에 userName이 들어있어야 함.

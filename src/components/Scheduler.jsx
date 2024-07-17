@@ -7,7 +7,7 @@ import { CustomAppointment } from './CustomAppointment';
 import { CustomTimeTableCell } from './CustomWeekView';
 import todayAppointments from '../demo-data/today-appointment'; // 기본 데이터 가져오기
 
-const SchedulerComponent = ({ events = [] }) => {
+const SchedulerComponent = ({ events = [], onEventClick }) => {
   // const eventList = Array.isArray(events) && events.length > 0 ? events : [todayAppointments];
   // ^ 백엔드 대신
 
@@ -19,6 +19,12 @@ const SchedulerComponent = ({ events = [] }) => {
     endDate: new Date(event.endDate),
   }));
 
+  const handleAppointmentClick = ({ data }) => {
+    if (onEventClick) {
+      onEventClick(data.id);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Paper>
@@ -28,7 +34,14 @@ const SchedulerComponent = ({ events = [] }) => {
             endDayHour={19} 
             timeTableCellComponent={CustomTimeTableCell} 
           />
-          <Appointments appointmentComponent={CustomAppointment} />
+          <Appointments 
+            appointmentComponent={(props) => (
+              <CustomAppointment
+                {...props}
+                onClick={() => handleAppointmentClick(props)}
+              />
+            )}
+          />
         </Scheduler>
       </Paper>
     </ThemeProvider>
@@ -36,3 +49,4 @@ const SchedulerComponent = ({ events = [] }) => {
 };
 
 export default SchedulerComponent;
+

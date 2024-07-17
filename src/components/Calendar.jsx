@@ -42,7 +42,7 @@ const StyledDateNavigatorNavigationButton = styled(DateNavigator.NavigationButto
   borderColor: theme.palette.custom.main,
 }));
 
-const Calendar = ({ events = [] }) => {
+const Calendar = ({ events = [], onEventClick }) => {
   const [data, setData] = React.useState([]);
 
   React.useEffect(() => {
@@ -55,6 +55,12 @@ const Calendar = ({ events = [] }) => {
       setData(formattedEvents);
     }
   }, [events]);
+
+  const handleAppointmentClick = ({ data }) => {
+    if (onEventClick) {
+      onEventClick(data.id);
+    }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -75,7 +81,11 @@ const Calendar = ({ events = [] }) => {
             <StyledTodayButton {...props} />
           )} />
           <Appointments appointmentComponent={(props) => (
-            <StyledAppointmentsAppointment {...props} className={classes.appointment} />
+            <StyledAppointmentsAppointment 
+            {...props} 
+            className={classes.appointment}
+            onClick={() => handleAppointmentClick(props)}
+            />
           )} />
         </Scheduler>
       </Paper>
@@ -84,3 +94,4 @@ const Calendar = ({ events = [] }) => {
 };
 
 export default Calendar;
+

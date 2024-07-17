@@ -2,15 +2,44 @@ import { useState, useEffect } from "react";
 import LabelWithHighlight from "../components/LabelWithHighlight";
 import "../styles/pages/CreateGroupPage.scss";
 import { useNavigate, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createGroup } from "../redux/groupSlice";
 
 const CreateGroupPage = () => {
   const nav = useNavigate();
-  const userName = useSelector((state) => state.userInfo.userName);
-  const [groupName, setGroupName] = useState("Enter Group Name");
+  const dispatch = useDispatch();
+  const userName = useSelector((state) => state.auth.user.userName); // 이 화면은 어차피 유저가 로그인이 되어 있어야 한다
+
+  const [groupName, setGroupName] = useState("");
   // useEffect(() => {
   //   console.log(groupName);
   // }, [groupName]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [time, setTime] = useState(3);
+  const [memberNum, setMemberNum] = useState(5);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const groupData = {
+      groupName,
+      startDate,
+      endDate,
+      time,
+      memberNum,
+    };
+
+    try {
+      const result = await dispatch(createGroup(groupData)).unwrap();
+      if (result.status === 200) {
+        nav("/waiting-room");
+      } else {
+        alert(result.msg || "Failed to create group");
+      }
+    } catch (error) {
+      alert(error.message || "Failed to create group");
+    }
+  };
 
   return (
     <div className="create-group-page">
@@ -43,7 +72,7 @@ const CreateGroupPage = () => {
             <rect y="8.00006" width="30" height="4" rx="2" fill="black" />
           </svg>
         </button>
-        <div className="group-content-scaffold">
+        <form className="group-content-scaffold" onSubmit={handleSubmit}>
           <div>
             <svg
               className="group-name-circle"
@@ -68,7 +97,7 @@ const CreateGroupPage = () => {
                 textAnchor="middle"
                 fill="black"
               >
-                {groupName[0]}
+                {groupName[0] || ""}
               </text>
             </svg>
           </div>
@@ -84,9 +113,11 @@ const CreateGroupPage = () => {
               />
               <input
                 type="text"
-                placeholder={groupName}
+                placeholder="Enter group name"
                 className="group-name"
+                value={groupName}
                 onChange={(e) => setGroupName(e.target.value)}
+                required
               />
               <LabelWithHighlight
                 title="Creator"
@@ -108,9 +139,19 @@ const CreateGroupPage = () => {
                 boxw={10}
               />
               <div className="date-select">
-                <input type="date" />
+                <input
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  required
+                />
                 <p> ~ </p>
-                <input type="date" />
+                <input
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  required
+                />
               </div>
 
               <LabelWithHighlight
@@ -125,9 +166,12 @@ const CreateGroupPage = () => {
                 <input
                   type="number"
                   placeholder="3"
+                  value={time}
                   min="1"
                   max="10"
+                  onChange={(e) => setTime(e.target.value)}
                   id="number-input"
+                  required
                 />
                 <p>Hours</p>
               </div>
@@ -142,19 +186,27 @@ const CreateGroupPage = () => {
               <input
                 type="number"
                 placeholder="5"
+                value={memberNum}
                 min="2"
                 max="20"
+                onChange={(e) => setMemberNum(e.target.value)}
                 id="number-input"
+                required
               />
             </div>
           </div>
-        </div>
-        {/* <button className="create-group-button">
+          <button type="submit" className="create-group-button">
+            <p>{"Create ->"}</p>
+          </button>
+          {/* <button className="create-group-button">
           <p>{"Create →"}</p>
         </button> */}
+          {/*
         <Link className="create-group-button" to="/waiting-room">
           <p>{"Create →"}</p>
         </Link>
+        */}
+        </form>
       </div>
 
       <div className="background">
