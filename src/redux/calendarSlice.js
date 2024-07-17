@@ -9,7 +9,7 @@ export const fetchEvents = createAsyncThunk('calendar/fetchEvents', async (group
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
-});
+);
 
 export const createSchedule = createAsyncThunk('calendar/createSchedule', async ({ id, scheduleData }, { rejectWithValue }) => {
   try {
@@ -18,10 +18,10 @@ export const createSchedule = createAsyncThunk('calendar/createSchedule', async 
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
-});
+);
 
 const calendarSlice = createSlice({
-  name: 'calendar',
+  name: "calendar",
   initialState: {
     events: [],
     loading: false,
