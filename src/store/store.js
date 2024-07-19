@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userSessionReducer from "./user/userSessionSlice";
-import userInfoReducer from "./user/userInfoSlice";
+// import userSessionReducer from "./user/userSessionSlice";
+// import userInfoReducer from "./user/userInfoSlice";
 import calendarReducer from "../redux/calendarSlice";
 import groupReducer from "../redux/groupSlice";
 import itemReducer from "../redux/itemSlice";

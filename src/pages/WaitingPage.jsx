@@ -1,5 +1,5 @@
 import { useNavigate, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 import "../styles/pages/WaitingPage.scss";
@@ -12,12 +12,14 @@ import { BACKEND_ENDPOINT } from "../store/config/configSlice";
 const WaitingPage = () => {
   const nav = useNavigate();
   const [clicksLeft, setClicksLeft] = useState(5);
-  const groupId = 'group_one';  // 실제 그룹의 ID 대체
+  const groupId = "group_one"; // 실제 그룹의 ID 대체
 
   useEffect(() => {
     const fetchClicksLeft = async () => {
       try {
-        const response = await axios.get(`${BACKEND_ENDPOINT}/api/group/${groupId}/clicks-left`);
+        const response = await axios.get(
+          `${BACKEND_ENDPOINT}/api/group/${groupId}/clicks-left`
+        );
       } catch (error) {
         console.error("Failed to fetch click left", error);
       }
@@ -31,8 +33,9 @@ const WaitingPage = () => {
       try {
         const newClicksLeft = clicksLeft - 1;
         setClicksLeft(newClicksLeft);
-        await axios.post(`${BACKEND_ENDPOINT}/api/group/${groupId}/click`, {clicksLeft: newClicksLeft});
-
+        await axios.post(`${BACKEND_ENDPOINT}/api/group/${groupId}/click`, {
+          clicksLeft: newClicksLeft,
+        });
       } catch (error) {
         console.error("Failed to update click Left", error);
       }
@@ -40,7 +43,7 @@ const WaitingPage = () => {
   };
 
   if (clicksLeft == null) {
-    return <p>Loading...</p>
+    return <p>Loading...</p>;
   }
 
   return clicksLeft > 0 ? (
@@ -83,7 +86,9 @@ const WaitingPage = () => {
             boxh={1.3}
             boxw={10}
           />
-          <a href={`http://www.intercalendar.com/g/${groupId}`}>www.intercalendar.com/g/group_one</a>
+          <a href={`http://www.intercalendar.com/g/${groupId}`}>
+            www.intercalendar.com/g/group_one
+          </a>
           <svg
             className="user-profile-circle"
             width="149"
