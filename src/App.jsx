@@ -45,7 +45,7 @@ function App() {
             element={loggedIn ? <WaitingPage /> : <Navigate to="/login" />}
           />
           <Route
-            path="/group-page"
+            path="/group-page/:id?"
             element={loggedIn ? <GroupPage /> : <Navigate to="/login" />}
           />
           <Route path="*" element={<ErrorPage />} />

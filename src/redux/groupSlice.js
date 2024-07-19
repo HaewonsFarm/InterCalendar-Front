@@ -2,12 +2,19 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { BACKEND_ENDPOINT } from "../store/config/configSlice";
 
-export const createGroup = createAsyncThunk('group/createGroup', async (groupData, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${BACKEND_ENDPOINT}/api/group`, groupData);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+export const createGroup = createAsyncThunk(
+  "group/createGroup",
+  async (groupData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${BACKEND_ENDPOINT}/api/group`,
+        groupData
+      );
+      // return response.data;
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -54,12 +61,15 @@ export const updateGroup = createAsyncThunk(
   }
 );
 
-export const fetchGroups = createAsyncThunk('group/fetchGroups', async (_, { rejectWithValue }) => {
-  try {
-    const response = await axios.get(`${BACKEND_ENDPOINT}/api/group`);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+export const fetchGroups = createAsyncThunk(
+  "group/fetchGroups",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BACKEND_ENDPOINT}/api/group`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 

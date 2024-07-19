@@ -9,6 +9,12 @@ export const authSlice = createSlice({
       userNameFirst: "U",
       groupNum: 5,
     },
+    // isAuthenticated: false,
+    // user: {
+    //   userName: null,
+    //   userNameFirst: null,
+    //   groupNum: null,
+    // },
   },
 
   reducers: {

@@ -1,22 +1,35 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { BACKEND_ENDPOINT } from '../store/config/configSlice';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { BACKEND_ENDPOINT } from "../store/config/configSlice";
 
-export const fetchEvents = createAsyncThunk('calendar/fetchEvents', async (groupId, { rejectWithValue }) => {
-  try {
-    const response = await axios.get(`${BACKEND_ENDPOINT}/api/group/${groupId}`);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+export const fetchEvents = createAsyncThunk(
+  "calendar/fetchEvents",
+  async (groupId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        // `${BACKEND_ENDPOINT}/api/group/${groupId}`
+        `${BACKEND_ENDPOINT}/api/group`
+      );
+      console.log(response.status);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
-export const createSchedule = createAsyncThunk('calendar/createSchedule', async ({ id, scheduleData }, { rejectWithValue }) => {
-  try {
-    const response = await axios.post(`${BACKEND_ENDPOINT}/api/schedule/${id}`, scheduleData);
-    return response.data;
-  } catch (error) {
-    return rejectWithValue(error.response.data);
+export const createSchedule = createAsyncThunk(
+  "calendar/createSchedule",
+  async ({ id, scheduleData }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${BACKEND_ENDPOINT}/api/schedule/${id}`,
+        scheduleData
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
