@@ -73,6 +73,18 @@ export const fetchGroups = createAsyncThunk(
   }
 );
 
+// new thunk to fetch best meeting time
+export const findBestMeetingTime = createAsyncThunk(
+  'group/findBestMeetingTime', async (groupId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${BACKEND_ENDPOINT}/api/group/best-meeting-time/${groupId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  });
+
+
 const groupSlice = createSlice({
   name: "group",
   initialState: {
@@ -138,6 +150,17 @@ const groupSlice = createSlice({
       .addCase(fetchGroups.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(findBestMeetingTime.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(findBestMeetingTime.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.findBestMeetingTime = action.payload;
+      })
+      .addCase(findBestMeetingTime.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error= action.payload;
       });
   },
 });

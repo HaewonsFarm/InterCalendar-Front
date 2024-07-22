@@ -9,13 +9,13 @@ import ItemPage from "./pages/ItemPage";
 import WaitingPage from "./pages/WaitingPage";
 import GroupPage from "./pages/GroupPage";
 
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import "./App.scss";
 
 function App() {
-  const loggedIn = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  // const loggedIn = useSelector((state) => state.auth.isAuthenticated);
 
   // useEffect(() => {
   //   console.log(loggedIn);
@@ -30,23 +30,23 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route
             path="/profile"
-            element={loggedIn ? <ProfilePage /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <ProfilePage /> : <Navigate to="/login" />}
           />
           <Route
             path="/create-group"
-            element={loggedIn ? <CreateGroupPage /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <CreateGroupPage /> : <Navigate to="/login" />}
           />
           <Route
             path="/crud-new-item/:id?"
-            element={loggedIn ? <ItemPage /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <ItemPage /> : <Navigate to="/login" />}
           />
           <Route
             path="/waiting-room/:roomId?"
-            element={loggedIn ? <WaitingPage /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <WaitingPage /> : <Navigate to="/login" />}
           />
           <Route
             path="/group-page/:id?"
-            element={loggedIn ? <GroupPage /> : <Navigate to="/login" />}
+            element={isAuthenticated ? <GroupPage /> : <Navigate to="/login" />}
           />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

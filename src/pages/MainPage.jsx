@@ -77,7 +77,7 @@ const MainPage = () => {
             </button>
           </div>
           {loading && <p>Loading...</p>}
-          {error && <p>Error: {error}</p>}
+          {error && <p>Error: {JSON.stringify(error)}</p>}  {/* 문제 발생 */}
           <div className="main-calendar">
             {showCalendar ? (
               <Calendar events={eventList} onEventClick={handleEventClick} />
@@ -88,43 +88,6 @@ const MainPage = () => {
               />
             )}
           </div>
-          {selectedGroup && (
-            <div className="schedule-form">
-              <h2>Create Schedule for {selectedGroup.groupName}</h2>
-              <form onSubmit={handleSubmit}>
-                <input
-                  type="date"
-                  name="date"
-                  value={scheduleData.date}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="text"
-                  name="description"
-                  value={scheduleData.description}
-                  onChange={handleChange}
-                  placeholder="Description"
-                  required
-                />
-                <input
-                  type="time"
-                  name="startTime"
-                  value={scheduleData.startTime}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="time"
-                  name="endTime"
-                  value={scheduleData.endTime}
-                  onChange={handleChange}
-                  required
-                />
-                <button type="submit">Create Schedule</button>
-              </form>
-            </div>
-          )}
         </div>
       </div>
     </div>

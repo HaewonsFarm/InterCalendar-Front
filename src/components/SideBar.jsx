@@ -31,7 +31,7 @@ export const SideBar = ({ setSelectedGroup }) => {
           {groups.map(group => (
             <button 
               key={group.id} 
-              className="group-button" 
+              className="sidebar-inters-button" 
               onClick={() => setSelectedGroup(group)}>
               {group.groupName}
             </button>

@@ -5,6 +5,7 @@
   border-radius: 1rem;
   background-color: #efbc9b;
 
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,6 +20,7 @@
 }
 
 .add {
+  margin-top: 10px;
   top: 3vh;
   background-color: #d6dac8;
   color: white;

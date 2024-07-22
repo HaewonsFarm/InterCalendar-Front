@@ -1,12 +1,38 @@
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../store/user/authSlice";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/pages/LoginPage.scss";
 
+
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("https://intercalendar.xyz/user/login", {
+        username,
+        password,
+      });
+      dispatch(login(response.data));
+      navigate("/");
+    } catch (err) {
+      setError("Invalid username or password");
+    }
+  };
+
   return (
     <>
       <div className="login-scaffold">
         <h1>Log In</h1>
 
-        <form action="">
+        <form onSubmit={handleLogin}>
           <div className="input-scaffold">
             {/* <p className="username-title">Username</p> */}
             <div className="username-form">
@@ -16,10 +42,13 @@ const LoginPage = () => {
 
             {/* <p className="password-title">Password</p> */}
             <div className="password-form">
-              <input type="password" placeholder="Password" />
+              <input type="password" placeholder="Password"
+                value={password} onChange={(e) => setPassword(e.target.value)}
+              />
               <div className="password input-line" />
             </div>
-            <button className="submit-button">Log In</button>
+            {error && <p className="error">{error}</p>}
+            <button type="submit" className="submit-button">Log In</button>
           </div>
         </form>
       </div>
